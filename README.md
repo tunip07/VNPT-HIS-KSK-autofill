@@ -3,10 +3,10 @@
 # ⚡ VNPT HIS Auto-Fill KSK — Chrome Extension
 ### Giải pháp Tự động hóa Nhập liệu Y tế Học đường Thông minh với Google Gemini Multimodal AI
 
-[![Cuộc thi Sáng tạo AI của Google 2026](https://img.shields.io/badge/Google_AI-Cuộc_thi_Sáng_tạo_AI_2026-4285F4?style=for-the-badge&logo=google&logoColor=white)](https://ai.studio)
+[![AI Riser Vietnam 2026](https://img.shields.io/badge/Google_AI-Cuộc_thi_Sáng_tạo_AI_2026-4285F4?style=for-the-badge&logo=google&logoColor=white)](https://ai.studio)
 [![Google Gemini API](https://img.shields.io/badge/Powered_by-Gemini_2.0_Flash-8E75B2?style=for-the-badge&logo=googlegemini&logoColor=white)](https://ai.google.dev/)
 [![Chrome Extension](https://img.shields.io/badge/Chrome_Extension-Manifest_V3-34A853?style=for-the-badge&logo=googlechrome&logoColor=white)](https://developer.chrome.com/docs/extensions/mv3/intro/)
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg?style=for-the-badge)](https://opensource.org/licenses/MIT)
+
 
 <p align="center">
   <b>Dự án tham dự Cuộc thi AI Riser Vietnam 2026 #BuildwithGoogleAI</b><br>
