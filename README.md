@@ -9,7 +9,7 @@
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg?style=for-the-badge)](https://opensource.org/licenses/MIT)
 
 <p align="center">
-  <b>Dự án tham dự Cuộc thi Sáng tạo AI của Google (Google AI Innovation Contest 2026)</b><br>
+  <b>Dự án tham dự Cuộc thi AI Riser Vietnam 2026 #BuildwithGoogleAI</b><br>
   <i>Tự động hóa 100% quy trình Tiếp nhận ngoại trú và Điền Phiếu Khám Sức Khỏe Học Sinh (Thông tư 25/2020/TT-BYT & TT32) trên hệ thống VNPT HIS trong vòng chưa đầy 3 giây bằng sức mạnh thị giác AI của Google Gemini.</i>
 </p>
 
