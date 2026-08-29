@@ -93,7 +93,7 @@ graph LR
 ## 📦 5. Hướng dẫn Cài đặt trong 1 Phút
 
 ### Cài đặt Tiện ích trên Google Chrome:
-1. Tải về mã nguồn hoặc file [**`vnpt_his_autofill_extension_pro.zip`**](https://github.com/tunip07/VNPT-HIS-KSK-autofill/releases).
+1. Tải về mã nguồn hoặc file [**`vnpt_his_autofill_extension_pro.zip`**](https://github.com/tunip07/VNPT-HIS-KSK-autofill/releases) sau đó giải nén.
 2. Mở trình duyệt Chrome, truy cập đường dẫn: `chrome://extensions/`.
 3. Bật công tắc **"Developer mode" (Chế độ dành cho nhà phát triển)** ở góc trên bên phải.
 4. Bấm nút **"Load unpacked" (Tải tiện ích đã giải nén)** ở góc trên bên trái.
@@ -122,5 +122,7 @@ graph LR
 
 * **Google AI Studio App:**  
   👉 [https://ai.studio/apps/82564c35-befb-4906-8793-079e891054f3](https://ai.studio/apps/82564c35-befb-4906-8793-079e891054f3)
-* **Demo HTML độc lập:**  
-  Mở trực tiếp file [`demo_vnpt_his.html`](demo_vnpt_his.html) trên trình duyệt để trải nghiệm toàn bộ quy trình mô phỏng.
+* **Xem video demo Youtube:**  
+  👉 [https://ai.studio/apps/82564c35-befb-4906-8793-079e891054f3](https://ai.studio/apps/82564c35-befb-4906-8793-079e891054f3)
+* **Xem video hành trình Linkedln:**  
+  👉 [https://ai.studio/apps/82564c35-befb-4906-8793-079e891054f3](https://ai.studio/apps/82564c35-befb-4906-8793-079e891054f3)
