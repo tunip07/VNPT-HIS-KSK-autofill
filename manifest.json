@@ -1,0 +1,39 @@
+{
+  "manifest_version": 3,
+  "name": "VNPT HIS Auto-Fill KSK Pro",
+  "version": "2.0.0",
+  "description": "Tiện ích tự động điền hồ sơ Tiếp nhận ngoại trú & Khám sức khỏe TT25 trên VNPT HIS từ dữ liệu JSON OCR",
+  "permissions": [
+    "storage",
+    "activeTab"
+  ],
+  "host_permissions": [
+    "https://*.vnpthis.vn/*",
+    "https://yte-caobang.vnpthis.vn/*"
+  ],
+  "action": {
+    "default_popup": "popup.html",
+    "default_title": "VNPT HIS Auto-Fill KSK Pro"
+  },
+  "icons": {
+    "16": "icons/icon16.png",
+    "48": "icons/icon48.png",
+    "128": "icons/icon128.png"
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "https://*.vnpthis.vn/*",
+        "https://yte-caobang.vnpthis.vn/*"
+      ],
+      "js": [
+        "content.js"
+      ],
+      "css": [
+        "content.css"
+      ],
+      "world": "MAIN",
+      "run_at": "document_idle"
+    }
+  ]
+}
