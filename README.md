@@ -13,7 +13,7 @@
   <i>Tự động hóa 100% quy trình Tiếp nhận ngoại trú và Điền Phiếu Khám Sức Khỏe Học Sinh (Thông tư 25/2020/TT-BYT & TT32) trên hệ thống VNPT HIS trong vòng chưa đầy 3 giây bằng sức mạnh thị giác AI của Google Gemini.</i>
 </p>
 
-[🌐 Trải nghiệm Live Demo (Google AI Studio)](https://ai.studio/apps/82564c35-befb-4906-8793-079e891054f3) • [📦 Tải bản cài đặt Extension (.ZIP)](https://github.com/tunip07/VNPT-HIS-KSK-autofill/releases) • [📖 Hướng dẫn sử dụng](#-hướng-dẫn-cài-đặt-trong-1-phút)
+[🌐 Trải nghiệm Live Demo (Google AI Studio)](https://ai.studio/apps/82564c35-befb-4906-8793-079e891054f3) • [📦 Tải bản cài đặt Extension (.ZIP)](https://github.com/tunip07/VNPT-HIS-KSK-autofill/releases) • [📖 Hướng dẫn sử dụng](https://lnkd.in/p/gQFSBnRs)
 
 </div>
 
