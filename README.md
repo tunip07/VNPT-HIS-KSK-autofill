@@ -123,6 +123,6 @@ graph LR
 * **Google AI Studio App:**  
   👉 [https://ai.studio/apps/82564c35-befb-4906-8793-079e891054f3](https://ai.studio/apps/82564c35-befb-4906-8793-079e891054f3)
 * **Xem video demo Youtube:**  
-  👉 [https://ai.studio/apps/82564c35-befb-4906-8793-079e891054f3](https://ai.studio/apps/82564c35-befb-4906-8793-079e891054f3)
+  👉 [https://www.youtube.com/watch?v=ip-QsBQxzww](https://www.youtube.com/watch?v=ip-QsBQxzww)
 * **Xem video hành trình Linkedln:**  
-  👉 [https://ai.studio/apps/82564c35-befb-4906-8793-079e891054f3](https://ai.studio/apps/82564c35-befb-4906-8793-079e891054f3)
+  👉 [https://lnkd.in/p/gQFSBnRs]([https://ai.studio/apps/82564c35-befb-4906-8793-079e891054f3](https://lnkd.in/p/gQFSBnRs))
