@@ -19,7 +19,7 @@
     doi_tuong_tt25: "Học sinh trong các cơ sở giáo dục phổ thông",
     nguon_chi_tra_tt25: "Khác",
     ly_do_kham_tt25: "khám sức khỏe định kì",
-    bac_si_mac_dinh: "Nông Thị Luyến"
+    bac_si_mac_dinh: ""
   };
 
   const ANONYMIZED_GEMINI_PROMPT = `# PROMPT OCR HỒ SƠ KHÁM SỨC KHỎE HỌC SINH (DƯỚI 18 TUỔI)
@@ -31,24 +31,24 @@ Bạn là chuyên gia OCR y tế hàng đầu. Hãy đọc toàn bộ thông tin
 ## QUY TẮC BÓC TÁCH DỮ LIỆU:
 
 1. Hành chính: Họ tên viết hoa (in hoa), ngày sinh (DD/MM/YYYY), CCCD, ngày cấp, nơi cấp, dân tộc, nghề nghiệp (Học sinh).
-2. Địa chỉ: Lấy đầy đủ cả chuỗi và tách phuong_xa (ví dụ: Phường Hợp Giang), tinh (Cao Bằng).
-3. Người thân: Họ tên mẹ/bố/người giám hộ, mối quan hệ (ME / CHA / ONG_BA / ANH_CHI / QH_KHAC).
-4. Tiêm chủng (Rất quan trọng): Đọc kỹ từng hàng xem dấu tích V (✓ hoặc X) nằm ở cột nào:
-   - Cột 1 (Có) -> "Có"
-   - Cột 2 (Không) -> "Không"
-   - Cột 3 (Không nhớ) -> "Không nhớ"
-   - Nếu hàng nào để trống không tích -> ""
-5. Tiền sử bệnh tật:
-   - Tiền sử gia đình: Đọc dấu tích Không hoặc Có (kèm tên bệnh nếu có).
-   - Sản khoa: Bình thường hoặc ghi cụ thể.
-   - Bệnh bẩm sinh/mãn tính: Đọc dấu tích Không hoặc Có.
-   - Đang điều trị: Đọc dấu tích Không hoặc Có.
-6. Thể lực & Sinh hiệu: Chiều cao, Cân nặng, BMI, Huyết áp, Mạch, Phân loại thể lực (Loại I / Loại II...).
-7. Lâm sàng & Phân loại:
-   - Tuần hoàn, Hô hấp, Tiêu hóa, Thận tiết niệu, Thần kinh, Tâm thần, TMH, RHM: Nếu bình thường ghi "Bình thường" và phân loại "Loại I". Nếu không khám/không ghi thì để trống.
-   - Mắt: Thị lực có kính/không kính. Nếu có cận thị hoặc đeo kính thì phân loại "Loại II", nếu 10/10 bình thường thì "Loại I".
-   - Lưu ý quan trọng: Bỏ qua 2 mục không bắt buộc là Khám lâm sàng khác và Khám cận lâm sàng (để trống 100%).
-8. Kết luận: Tình trạng sức khỏe (ví dụ: Bình thường hoặc Cận thị), Phân loại sức khỏe chung (Loại I hoặc Loại II).
+2. Địa chỉ: Lấy đầy đủ cả chuỗi và tách phuong_xa (ví dụ: Phường Thục Phán, Phường Hợp Giang), tinh (Cao Bằng).
+3. Người thân & Số điện thoại (Rất quan trọng):
+   - Đọc kỹ dòng 11: Họ tên người đi cùng / Người giám hộ.
+   - Nếu có số điện thoại viết trong ngoặc đơn hoặc bên cạnh tên, hãy trích xuất chính xác vào cả "thong_tin_chung.so_dien_thoai" và "nguoi_lien_he.so_dien_thoai".
+   - Tách riêng họ tên người giám hộ vào "nguoi_giam_ho" / "ho_ten_me".
+   - Mối quan hệ: ME / CHA / ONG_BA / ANH_CHI / QH_KHAC.
+4. Tiêm chủng: Đọc dấu tích V hoặc X. Cột 1 (Có), Cột 2 (Không), Cột 3 (Không nhớ). Nếu để trống -> "".
+5. Tiền sử bệnh tật: Tiền sử gia đình, sản khoa, bệnh bẩm sinh, đang điều trị (Đọc dấu tích Không hoặc Có).
+6. Thể lực & Sinh hiệu: Chiều cao, Cân nặng, BMI, Huyết áp, Mạch, Phân loại thể lực.
+7. Lâm sàng:
+   - Răng Hàm Mặt: Nếu có sâu răng ghi "Sâu răng", phân loại "Loại II". Bình thường ghi "Bình thường", "Loại I".
+   - Mắt: Nếu cận thị/đeo kính ghi "Cận thị", "Loại II". 10/10 ghi "Bình thường", "Loại I".
+   - Tai Mũi Họng: Ghi rõ bệnh và phân loại (Bình thường là "Loại I").
+   - Các chuyên khoa khác: Mặc định "Bình thường" và "Loại I".
+   - Lưu ý: Bỏ qua 2 mục Khám lâm sàng khác và Khám cận lâm sàng (để trống 100%).
+8. Kết luận:
+   - "tinh_trang_suc_khoe": Tổng hợp các bệnh phát hiện (ví dụ: "Sâu răng" hoặc "Cận thị").
+   - "phan_loai_suc_khoe": Nếu có bất kỳ bệnh nào thì là "Loại II", nếu hoàn toàn khỏe mạnh thì "Loại I".
 
 ---
 
@@ -58,24 +58,25 @@ Bạn là chuyên gia OCR y tế hàng đầu. Hãy đọc toàn bộ thông tin
 {
   "thong_tin_chung": {
     "ho_ten": "NGUYỄN VĂN A",
-    "ngay_sinh": "15/05/2010",
-    "gioi_tinh": "Nam",
-    "cccd": "004210001234",
-    "dan_toc": "Kinh",
+    "ngay_sinh": "10/12/2009",
+    "gioi_tinh": "Nữ",
+    "cccd": "001205000001",
+    "dan_toc": "Tày",
     "nghe_nghiep": "Học sinh",
-    "so_dien_thoai": "",
-    "ngay_cap_cccd": "10/05/2024",
-    "noi_cap_cccd": "Bộ Công An"
+    "so_dien_thoai": "0912345678",
+    "ngay_cap_cccd": "06/06/2023",
+    "noi_cap_cccd": "Cục Cảnh sát QLHC về TTXH"
   },
   "dia_chi": {
-    "day_du": "Số 123 đường Hoàng Đình Giong, phường Hợp Giang",
-    "phuong_xa": "Phường Hợp Giang",
+    "day_du": "Tổ 1, Phường Tân Giang, Thành phố Cao Bằng",
+    "phuong_xa": "Phường Tân Giang",
     "tinh": "Cao Bằng"
   },
   "nguoi_lien_he": {
-    "nguoi_giam_ho": "TRẦN THỊ B",
+    "nguoi_giam_ho": "NGUYỄN THỊ B",
     "ho_ten_bo": null,
-    "ho_ten_me": "TRẦN THỊ B",
+    "ho_ten_me": "NGUYỄN THỊ B",
+    "so_dien_thoai": "0912345678",
     "moi_quan_he": "ME"
   },
   "tiem_chung": {
@@ -83,7 +84,7 @@ Bạn là chuyên gia OCR y tế hàng đầu. Hãy đọc toàn bộ thông tin
     "bach_hau_ho_ga_uon_van": "Có",
     "soi": "Có",
     "bai_liet": "Có",
-    "viem_nao_nhat_ban_b": "",
+    "viem_nao_nhat_ban_b": "Có",
     "viem_gan_b": "Có",
     "cac_loai_khac": "Không nhớ"
   },
@@ -123,7 +124,7 @@ Bạn là chuyên gia OCR y tế hàng đầu. Hãy đọc toàn bộ thông tin
     "co_kinh_mp": "10/10",
     "co_kinh_mt": "10/10",
     "benh_ve_mat": "",
-    "phan_loai": "Loại II"
+    "phan_loai": "Loại I"
   },
   "tai_mui_hong": {
     "tai_trai_noi_thuong": "5",
@@ -136,12 +137,12 @@ Bạn là chuyên gia OCR y tế hàng đầu. Hãy đọc toàn bộ thông tin
   "rang_ham_mat": {
     "ham_tren": "Bình thường",
     "ham_duoi": "Bình thường",
-    "benh_ve_rang": "Bình thường",
-    "phan_loai": "Loại I"
+    "benh_ve_rang": "Sâu răng",
+    "phan_loai": "Loại II"
   },
   "ket_luan": {
-    "phan_loai_suc_khoe": "Loại II",
-    "tinh_trang_suc_khoe": "Cận thị"
+    "tinh_trang_suc_khoe": "Sâu răng",
+    "phan_loai_suc_khoe": "Loại II"
   }
 }
 \`\`\``;
@@ -181,66 +182,132 @@ Bạn là chuyên gia OCR y tế hàng đầu. Hãy đọc toàn bộ thông tin
 
   function triggerEnter(element) {
     if (!element) return;
-    element.focus();
+    try {
+      element.focus();
+    } catch (e) {}
 
-    if (window.jQuery) {
-      const $el = window.$(element);
-      const eDown = window.$.Event("keydown", { which: 13, keyCode: 13, key: "Enter", code: "Enter", charCode: 13 });
-      const ePress = window.$.Event("keypress", { which: 13, keyCode: 13, key: "Enter", code: "Enter", charCode: 13 });
-      const eUp = window.$.Event("keyup", { which: 13, keyCode: 13, key: "Enter", code: "Enter", charCode: 13 });
+    // 1. Native Keyboard Events (Chuẩn W3C KeyboardEvent)
+    try {
+      const createKeyboardEvt = (type) =>
+        new KeyboardEvent(type, {
+          key: "Enter",
+          code: "Enter",
+          keyCode: 13,
+          which: 13,
+          charCode: 13,
+          bubbles: true,
+          cancelable: true,
+          composed: true
+        });
 
-      $el.trigger(eDown);
-      $el.trigger(ePress);
-      $el.trigger(eUp);
-      $el.trigger("change");
+      element.dispatchEvent(createKeyboardEvt("keydown"));
+      element.dispatchEvent(createKeyboardEvt("keypress"));
+      element.dispatchEvent(createKeyboardEvt("keyup"));
+      element.dispatchEvent(new Event("input", { bubbles: true }));
+      element.dispatchEvent(new Event("change", { bubbles: true }));
+    } catch (e) {}
 
-      try {
-        const events = window.$._data(element, "events");
-        if (events) {
-          if (events.keypress) events.keypress.forEach((h) => h.handler && h.handler.call(element, ePress));
-          if (events.keydown) events.keydown.forEach((h) => h.handler && h.handler.call(element, eDown));
-        }
-      } catch (err) {}
-    }
+    // 2. jQuery Events (Dispatch qua jQuery Event system an toàn 100%)
+    try {
+      if (window.jQuery) {
+        const $el = window.$(element);
+        const eDown = window.$.Event("keydown", { which: 13, keyCode: 13, key: "Enter", code: "Enter", charCode: 13, bubbles: true });
+        const ePress = window.$.Event("keypress", { which: 13, keyCode: 13, key: "Enter", code: "Enter", charCode: 13, bubbles: true });
+        const eUp = window.$.Event("keyup", { which: 13, keyCode: 13, key: "Enter", code: "Enter", charCode: 13, bubbles: true });
 
-    ["keydown", "keypress", "keyup"].forEach((eventType) => {
-      const evt = new KeyboardEvent(eventType, {
-        key: "Enter",
-        code: "Enter",
-        keyCode: 13,
-        which: 13,
-        charCode: 13,
-        bubbles: true,
-        cancelable: true,
-        composed: true
-      });
-      element.dispatchEvent(evt);
-    });
+        $el.trigger(eDown);
+        $el.trigger(ePress);
+        $el.trigger(eUp);
+        $el.trigger("change");
+      }
+    } catch (e) {}
+
+    try {
+      element.blur();
+      element.focus();
+    } catch (e) {}
   }
 
   function safeSetInput(elementId, value) {
     if (value === undefined || value === null || String(value).trim() === "") return;
     const el = document.getElementById(elementId) || document.querySelector(elementId);
     if (!el) return;
-    if (el.disabled) el.removeAttribute("disabled");
-    el.value = String(value);
-    el.dispatchEvent(new Event("input", { bubbles: true }));
-    el.dispatchEvent(new Event("change", { bubbles: true }));
+    try {
+      if (el.disabled) el.removeAttribute("disabled");
+    } catch (e) {}
+
+    let valStr = String(value).trim();
+
+    // Xử lý chuẩn hóa cho input number hoặc các ô sinh hiệu đặc thù
+    if (el.tagName === "INPUT" && el.type === "number") {
+      valStr = valStr.replace(/,/g, ".");
+      if (el.step === "1" || !el.step) {
+        if (/^\d+\.\d+$/.test(valStr)) {
+          valStr = String(Math.round(parseFloat(valStr)));
+        }
+      }
+    }
+
+    // Nếu là ô mạch hoặc nhịp thở, luôn lấy số nguyên
+    if (elementId === "mach" || elementId === "nhiptho" || elementId === "tt32_mau1kskmach") {
+      const matchNum = valStr.match(/\d+/);
+      if (matchNum) valStr = matchNum[0];
+    }
+    
+    // Nếu là ô nhiệt độ ngoài màn hình chính
+    if (elementId === "nhietdo") {
+      valStr = valStr.replace(/,/g, ".");
+    }
+    
+    try {
+      el.focus();
+    } catch (e) {}
+
+    try {
+      el.value = valStr;
+    } catch (e) {}
+
+    try {
+      el.dispatchEvent(new Event("input", { bubbles: true }));
+      el.dispatchEvent(new Event("change", { bubbles: true }));
+    } catch (e) {}
+
     if (window.jQuery && window.$(el).length) {
-      window.$(el).val(String(value)).trigger("input").trigger("change");
+      try {
+        window.$(el).val(valStr).trigger("change");
+      } catch (e) {}
     }
   }
 
   function safeClearInput(elementId) {
     const el = document.getElementById(elementId) || document.querySelector(elementId);
     if (!el) return;
-    if (el.disabled) el.removeAttribute("disabled");
-    el.value = "";
-    el.dispatchEvent(new Event("input", { bubbles: true }));
-    el.dispatchEvent(new Event("change", { bubbles: true }));
+    try {
+      if (el.disabled) el.removeAttribute("disabled");
+    } catch (e) {}
+    
+    try {
+      el.value = "";
+      el.dispatchEvent(new Event("input", { bubbles: true }));
+      el.dispatchEvent(new Event("change", { bubbles: true }));
+    } catch (e) {}
+
     if (window.jQuery && window.$(el).length) {
-      window.$(el).val("").trigger("input").trigger("change");
+      try {
+        window.$(el).val("").trigger("change");
+      } catch (e) {}
     }
+  }
+
+  function normalizeClassification(val) {
+    if (!val) return "Loại I";
+    const s = String(val).toLowerCase().trim();
+    if (s.includes("iii") || s === "3" || s === "loại 3" || s === "loại iii") return "Loại III";
+    if (s.includes("iv") || s === "4" || s === "loại 4" || s === "loại iv") return "Loại IV";
+    if (s.includes("v") || s === "5" || s === "loại 5" || s === "loại v") return "Loại V";
+    if (s.includes("ii") || s === "2" || s === "loại 2" || s === "loại ii") return "Loại II";
+    if (s.includes("i") || s === "1" || s === "loại 1" || s === "loại i") return "Loại I";
+    return "Loại I";
   }
 
   function safeSelectOption(elementId, expectedText) {
@@ -248,11 +315,55 @@ Bạn là chuyên gia OCR y tế hàng đầu. Hãy đọc toàn bộ thông tin
     const el = document.getElementById(elementId) || document.querySelector(elementId);
     if (!el || !el.options) return;
     if (el.disabled) el.removeAttribute("disabled");
-    const target = expectedText.toLowerCase().trim();
+    const target = String(expectedText).toLowerCase().trim();
+
+    // 1. So khớp CHÍNH XÁC 100% (Ưu tiên số 1)
     for (let i = 0; i < el.options.length; i++) {
       const opt = el.options[i];
       const optText = opt.text.toLowerCase().trim();
-      if (optText.indexOf(target) !== -1 || target.indexOf(optText) !== -1) {
+      const optVal = opt.value.toLowerCase().trim();
+      if (optText === target || optVal === target) {
+        el.selectedIndex = i;
+        el.value = opt.value;
+        el.dispatchEvent(new Event("change", { bubbles: true }));
+        if (window.jQuery && window.$(el).length) {
+          window.$(el).val(opt.value).trigger("change");
+        }
+        return opt.text;
+      }
+    }
+
+    // 2. So khớp chuẩn hóa Phân loại sức khỏe (Loại I, II, III, IV, V)
+    if (target.startsWith("loại") || ["i", "ii", "iii", "iv", "v", "1", "2", "3", "4", "5"].includes(target)) {
+      const norm = normalizeClassification(target).toLowerCase();
+      for (let i = 0; i < el.options.length; i++) {
+        const opt = el.options[i];
+        const optText = opt.text.toLowerCase().trim();
+        const optVal = opt.value.toLowerCase().trim();
+        if (optText === norm || optVal === norm) {
+          el.selectedIndex = i;
+          el.value = opt.value;
+          el.dispatchEvent(new Event("change", { bubbles: true }));
+          if (window.jQuery && window.$(el).length) {
+            window.$(el).val(opt.value).trigger("change");
+          }
+          return opt.text;
+        }
+      }
+    }
+
+    // 3. So khớp chuỗi con (Chỉ dùng cho các trường văn bản chung, KHÔNG so khớp sai Loại I với Loại II)
+    for (let i = 0; i < el.options.length; i++) {
+      const opt = el.options[i];
+      const optText = opt.text.toLowerCase().trim();
+      if (!optText || optText.includes("chọn")) continue;
+      
+      // Bỏ qua nếu là các trường phân loại để tránh so khớp nhầm
+      if (optText.startsWith("loại ") && target.startsWith("loại ")) {
+        continue;
+      }
+
+      if (optText.includes(target) || target.includes(optText)) {
         el.selectedIndex = i;
         el.value = opt.value;
         el.dispatchEvent(new Event("change", { bubbles: true }));
@@ -279,45 +390,85 @@ Bạn là chuyên gia OCR y tế hàng đầu. Hãy đọc toàn bộ thông tin
 
   function safeSelect2(elementId, searchKeyword) {
     if (!searchKeyword) return;
-    const target = searchKeyword.toLowerCase().trim();
-    const select = document.getElementById(elementId);
-    if (!select) return;
+    const target = String(searchKeyword).toLowerCase().trim();
+    const cleanTarget = target
+      .replace(/^(phường|xã|thị trấn|tỉnh|thành phố|huyện|tp\.?)\s+/i, "")
+      .trim();
+
+    const select = document.getElementById(elementId) || document.querySelector(elementId);
+    if (!select || !select.options) return;
 
     if (select.disabled) select.removeAttribute("disabled");
 
     let foundVal = null;
     let foundText = null;
+    let foundIndex = -1;
 
+    // 1. So khớp chính xác
     for (let i = 0; i < select.options.length; i++) {
       const opt = select.options[i];
       const txt = opt.text.toLowerCase().trim();
-      const cleanTarget = target.replace(/^(phường|xã|thị trấn)\s+/i, "").trim();
-      const cleanTxt = txt.replace(/^(phường|xã|thị trấn)\s+/i, "").trim();
+      const val = opt.value.toLowerCase().trim();
+      const cleanTxt = txt
+        .replace(/^(phường|xã|thị trấn|tỉnh|thành phố|huyện|tp\.?)\s+/i, "")
+        .trim();
 
-      if (txt.indexOf(target) !== -1 || cleanTxt.indexOf(cleanTarget) !== -1 || target.indexOf(cleanTxt) !== -1) {
+      if (txt === target || cleanTxt === cleanTarget || val === target) {
         foundVal = opt.value;
-        foundText = opt.text;
+        foundText = opt.text.trim();
+        foundIndex = i;
         break;
       }
     }
 
-    if (foundVal) {
+    // 2. So khớp chứa chuỗi (nếu chưa tìm thấy)
+    if (foundIndex === -1) {
+      for (let i = 0; i < select.options.length; i++) {
+        const opt = select.options[i];
+        const txt = opt.text.toLowerCase().trim();
+        if (!txt || txt.includes("chọn")) continue;
+        const cleanTxt = txt
+          .replace(/^(phường|xã|thị trấn|tỉnh|thành phố|huyện|tp\.?)\s+/i, "")
+          .trim();
+
+        if (
+          txt.includes(target) ||
+          target.includes(txt) ||
+          (cleanTarget && (cleanTxt.includes(cleanTarget) || cleanTarget.includes(cleanTxt)))
+        ) {
+          foundVal = opt.value;
+          foundText = opt.text.trim();
+          foundIndex = i;
+          break;
+        }
+      }
+    }
+
+    if (foundVal !== null && foundIndex !== -1) {
+      select.selectedIndex = foundIndex;
       select.value = foundVal;
       select.dispatchEvent(new Event("change", { bubbles: true }));
-      
+
       if (window.jQuery) {
-        const $el = window.$(`#${elementId}`);
-        $el.val(foundVal).trigger("change");
+        const $el = window.$(select);
+        $el.val(foundVal);
+        $el.trigger("change");
+        $el.trigger("change.select2");
+        $el.trigger("select2:select");
         try {
           $el.select2("val", foundVal);
         } catch (e) {}
       }
 
-      const container = document.getElementById(`select2-${elementId}-container`);
+      // Cập nhật text hiển thị trên giao diện Select2 container
+      const container = document.getElementById(`select2-${elementId}-container`)
+                     || document.querySelector(`[aria-labelledby*='select2-${elementId}-container']`)
+                     || select.parentElement?.querySelector(".select2-selection__rendered");
       if (container && foundText) {
         container.textContent = foundText;
         container.title = foundText;
       }
+      return foundText;
     }
   }
 
@@ -474,6 +625,8 @@ Bạn là chuyên gia OCR y tế hàng đầu. Hãy đọc toàn bộ thông tin
 
   function autofillDoctorToAllSpecialties(doctorValue) {
     if (!doctorValue) return 0;
+    const cleanDocTarget = String(doctorValue).toLowerCase().replace(/^(bs\.|ys\.|bác sĩ|y sĩ)\s*/i, "").trim();
+    
     // LOẠI TRỪ TUYỆT ĐỐI LÂM SÀNG KHÁC VÀ CẬN LÂM SÀNG
     const selects = document.querySelectorAll(
       "select[id^='tt32'][id*='bacsi']:not([id*='dantoc']):not([id*='nghe']):not([id*='lamsangkhac']):not([id*='khac']):not([id*='cls']):not([id*='canlam'])"
@@ -484,31 +637,48 @@ Bạn là chuyên gia OCR y tế hàng đầu. Hãy đọc toàn bộ thông tin
       const s = selects[i];
       if (s.disabled) s.removeAttribute("disabled");
       
-      let docName = "";
+      let matchedVal = "";
+      let matchedText = "";
+
       for (let o = 0; o < s.options.length; o++) {
-        if (s.options[o].value === String(doctorValue)) {
+        const opt = s.options[o];
+        const optVal = String(opt.value);
+        const optTxt = opt.text.trim().toLowerCase();
+        const cleanOptTxt = optTxt.replace(/^(bs\.|ys\.|bác sĩ|y sĩ)\s*/i, "").trim();
+
+        if (
+          optVal === String(doctorValue) ||
+          optTxt === cleanDocTarget ||
+          cleanOptTxt === cleanDocTarget ||
+          optTxt.includes(cleanDocTarget) ||
+          cleanOptTxt.includes(cleanDocTarget) ||
+          cleanDocTarget.includes(cleanOptTxt)
+        ) {
           s.selectedIndex = o;
-          s.value = String(doctorValue);
-          docName = s.options[o].text.trim();
+          s.value = opt.value;
+          matchedVal = opt.value;
+          matchedText = opt.text.trim();
           break;
         }
       }
 
-      s.dispatchEvent(new Event("change", { bubbles: true }));
+      if (matchedVal) {
+        s.dispatchEvent(new Event("change", { bubbles: true }));
 
-      if (window.jQuery) {
-        const $s = window.$(s);
-        $s.val(String(doctorValue));
-        $s.trigger("change");
-        $s.trigger("chosen:updated");
-        $s.trigger("liszt:updated");
-        
-        if (docName) {
-          $s.next(".chosen-container").find(".chosen-single span").text(docName);
-          $s.parent().find(".chosen-container .chosen-single span").text(docName);
+        if (window.jQuery) {
+          const $s = window.$(s);
+          $s.val(matchedVal);
+          $s.trigger("change");
+          $s.trigger("chosen:updated");
+          $s.trigger("liszt:updated");
+          
+          if (matchedText) {
+            $s.next(".chosen-container").find(".chosen-single span").text(matchedText);
+            $s.parent().find(".chosen-container .chosen-single span").text(matchedText);
+          }
         }
+        count++;
       }
-      count++;
     }
 
     // ĐẢM BẢO BÁC SĨ MỤC LÂM SÀNG KHÁC VÀ CẬN LÂM SÀNG ĐỂ TRỐNG (CHƯA KHÁM)
@@ -534,7 +704,7 @@ Bạn là chuyên gia OCR y tế hàng đầu. Hãy đọc toàn bộ thông tin
   }
 
   // -------------------------------------------------------------
-  // 4. STEP 1: TIẾP NHẬN NGOẠI TRÚ
+  // 4. STEP 1: TIẾP NHẬN NGOẠI TRÚ (TỰ ĐỘNG ĐIỀN SĐT & TỰ ĐỘNG LƯU)
   // -------------------------------------------------------------
   async function runStep1TiepNhan(patientData, settings, updateStatus) {
     updateStatus("info", "▶ Đang thực hiện Bước 1: Tiếp nhận...");
@@ -547,7 +717,7 @@ Bạn là chuyên gia OCR y tế hàng đầu. Hãy đọc toàn bộ thông tin
     const themBtn = document.getElementById("themmoi");
     if (themBtn) {
       themBtn.click();
-      await sleep(500);
+      await sleep(800);
     }
 
     const cccd = tt.cccd;
@@ -565,16 +735,16 @@ Bạn là chuyên gia OCR y tế hàng đầu. Hãy đọc toàn bộ thông tin
           elemCccd.dispatchEvent(new Event("change", { bubbles: true }));
         }
 
-        updateStatus("info", `-> Đang gửi ENTER cho CCCD: ${cccd}...`);
+        updateStatus("info", `-> Đang gửi phím ENTER cho CCCD: ${cccd}...`);
         triggerEnter(elemCccd);
         await sleep(600);
         triggerEnter(elemCccd);
 
-        updateStatus("info", "⏳ Đang đợi BHYT tải dữ liệu về...");
-        for (let w = 0; w < 10; w++) {
+        updateStatus("info", "⏳ Đang đợi hệ thống BHYT/CCCD tải dữ liệu về...");
+        for (let w = 0; w < 6; w++) {
           await sleep(500);
           const loading = document.getElementById("loadingIn4The");
-          if (loading && loading.style.display === "none" && w >= 6) {
+          if (loading && loading.style.display === "none" && w >= 3) {
             break;
           }
         }
@@ -582,6 +752,7 @@ Bạn là chuyên gia OCR y tế hàng đầu. Hãy đọc toàn bộ thông tin
     }
 
     const applyAllFields = () => {
+      // 1. Thông tin hành chính cơ bản
       safeSetInput("hoten", tt.ho_ten);
       safeSetInput("namsinh", tt.ngay_sinh);
       safeSelectOption("cbgioitinh", tt.gioi_tinh || "Nữ");
@@ -591,29 +762,55 @@ Bạn là chuyên gia OCR y tế hàng đầu. Hãy đọc toàn bộ thông tin
       }
       safeSelectOption("cbnghenghiep", tt.nghe_nghiep || "Học sinh");
       safeSelectOption("cbquoctich", "Việt Nam");
+      safeSelectOption("cboagg_quoc_tich", "Việt Nam");
 
-      if (tt.so_dien_thoai) {
-        safeSetInput("sdt", tt.so_dien_thoai);
+      // 2. Số điện thoại (điền cả 3 ô có thể có)
+      const sdtVal = tt.so_dien_thoai || lh.so_dien_thoai || "";
+      if (sdtVal) {
+        safeSetInput("sodt", sdtVal);
+        safeSetInput("sdt", sdtVal);
+        safeSetInput("sdtnguoilienhe", sdtVal);
       }
 
+      // 3. Địa chỉ hành chính (Tỉnh, Huyện, Xã, Địa chỉ chi tiết)
       const diaChiDayDu = dc.day_du || "";
       let phuongXa = dc.phuong_xa || "";
       if (!phuongXa && diaChiDayDu) {
         const m = diaChiDayDu.match(/(phường|xã|thị trấn)\s+([^,]+)/i);
         if (m) phuongXa = m[0].trim();
       }
+
+      const tinhVal = dc.tinh || "Cao Bằng";
+      safeSelect2("matinh_cu_tru", tinhVal);
+      safeSelect2("matinh", tinhVal);
+      safeSelectOption("matinh_cu_tru", tinhVal);
+
       if (phuongXa) {
         safeSelect2("maxa_cu_tru", phuongXa);
-      }
-      if (diaChiDayDu) {
-        safeSetInput("diachi", diaChiDayDu);
+        safeSelect2("maxa", phuongXa);
+        safeSelectOption("maxa_cu_tru", phuongXa);
       }
 
-      const tenNguoiLh = lh.nguoi_giam_ho || lh.ho_ten_me || lh.ho_ten_cha;
-      if (tenNguoiLh) safeSetInput("nguoilienhe", tenNguoiLh);
+      const huyenVal = dc.huyen || (diaChiDayDu.toLowerCase().includes("hòa an") ? "Huyện Hoà An" : "Thành phố Cao Bằng");
+      safeSelect2("mahuyen_cu_tru", huyenVal);
+      safeSelect2("mahuyen", huyenVal);
+      safeSelectOption("mahuyen_cu_tru", huyenVal);
+
+      if (diaChiDayDu) {
+        safeSetInput("diachi", diaChiDayDu);
+        safeSetInput("diachi_pnv", diaChiDayDu);
+        safeSetInput("lskb_diachi", diaChiDayDu);
+      }
+
+      // 4. Người liên hệ & Quan hệ (Chỉ điền tên, SĐT điền riêng ở ô SĐT)
+      let tenNguoiLh = lh.nguoi_giam_ho || lh.ho_ten_me || lh.ho_ten_cha || "";
+      if (tenNguoiLh) {
+        safeSetInput("nguoilienhe", tenNguoiLh);
+      }
       if (lh.ho_ten_cha) safeSetInput("ho_ten_cha", lh.ho_ten_cha);
       if (lh.ho_ten_me) safeSetInput("ho_ten_me", lh.ho_ten_me);
 
+      // 5. Thiết lập Phòng khám & Dịch vụ khám
       safeSetInput("phongkham", settings.phong_kham_id || "3");
       safeSelectOption("cbphongkham", settings.phong_kham_name || "PHÒNG KHÁM SỨC KHOẺ");
       safeSetInput("dichvu", settings.dich_vu_id || "1223");
@@ -621,26 +818,34 @@ Bạn là chuyên gia OCR y tế hàng đầu. Hãy đọc toàn bộ thông tin
     };
 
     applyAllFields();
-    await sleep(800);
+    await sleep(600);
     applyAllFields();
+    await sleep(200);
 
-    logAction(1, "✅ Đã điền xong Tiếp nhận & chỉnh đúng Phường/Xã.", "success");
-    updateStatus("success", "✅ Đã điền xong Tiếp nhận & chỉnh đúng Phường/Xã! Hãy kiểm tra và tự bấm nút [LƯU].");
+    logAction(1, "✅ Đã điền xong Tiếp nhận (CCCD, SĐT, Tỉnh/Xã & Địa chỉ). Vui lòng kiểm tra và bấm Lưu.", "success");
+    updateStatus("success", "✅ Đã điền xong thông tin Tiếp nhận! Bạn hãy kiểm tra lại và bấm nút [Lưu] trên VNPT HIS.");
   }
 
   // -------------------------------------------------------------
-  // 5. STEP 2: KHÁM BỆNH NGOẠI TRÚ (TT25)
+  // 5. STEP 2: KHÁM BỆNH NGOẠI TRÚ (TT25 - TỰ LƯU TAB 1,3,4 - DỪNG Ở TAB 2 ĐỂ BÁC SĨ CHECK)
   // -------------------------------------------------------------
-  async function runStep2KhamBenh(patientData, settings, selectedDoctorVal, updateStatus) {
-    updateStatus("info", "▶ Đang mở phiếu & điền Khám bệnh TT25...");
-    logAction(2, "Bắt đầu mở phiếu & điền Khám bệnh TT25", "info");
 
-    const btnKsk = document.getElementById("khamsuckhoetheodoituong");
-    if (btnKsk && (!document.getElementById("tt32_mau1ksk_tab1") || document.getElementById("tt32_mau1ksk_tab1").offsetParent === null)) {
-      btnKsk.click();
-      await sleep(1000);
+  function clickModalKskTab(tabIndex) {
+    const tabElem = document.getElementById(`tt32_mau1ksk_tab${tabIndex}`)
+                 || document.getElementById(`tt32_mau1ksk-tab${tabIndex}`)
+                 || document.getElementById(`tt32_mau2ksk_tab${tabIndex}`)
+                 || document.getElementById(`tt32_mau2ksk-tab${tabIndex}`)
+                 || document.querySelector(`a[href*='tt32_mau1ksk-tab${tabIndex}']`)
+                 || document.querySelector(`a[href*='tt32_mau2ksk-tab${tabIndex}']`);
+    if (tabElem) {
+      tabElem.click();
+      return true;
     }
+    return false;
+  }
 
+
+  function resolveDoctorValue(selectedDoctorVal, settings) {
     let docVal = selectedDoctorVal;
     if (!docVal) {
       const selectElem = document.getElementById("vnpt-doctor-select");
@@ -648,14 +853,32 @@ Bạn là chuyên gia OCR y tế hàng đầu. Hãy đọc toàn bộ thông tin
         docVal = selectElem.value;
       }
     }
+    if (!docVal && settings.bac_si_mac_dinh) {
+      docVal = settings.bac_si_mac_dinh;
+    }
     if (!docVal) {
       const docs = extractDoctorsFromPage();
       if (docs.length > 0) {
-        let prefDoc = docs.find((d) => settings.bac_si_mac_dinh && d.name.includes(settings.bac_si_mac_dinh));
+        const target = (settings.bac_si_mac_dinh || "").toLowerCase().replace(/^(bs\.|ys\.|bác sĩ|y sĩ)\s*/i, "").trim();
+        let prefDoc = docs.find((d) => target && d.name.toLowerCase().includes(target));
         docVal = prefDoc ? prefDoc.value : docs[0].value;
       }
     }
+    return docVal;
+  }
 
+  async function runStep2KhamBenh(patientData, settings, selectedDoctorVal, updateStatus) {
+    updateStatus("info", "▶ Đang tự động điền 4 Tab KSK TT25...");
+    logAction(2, "Bắt đầu tự động điền 4 Tab KSK TT25 (Theo đúng phân loại JSON)", "info");
+
+    const btnKsk = document.getElementById("khamsuckhoetheodoituong");
+    const tab1 = document.getElementById("tt32_mau1ksk_tab1") || document.getElementById("tt32_mau1ksk-tab1");
+    if (btnKsk && (!tab1 || tab1.offsetParent === null)) {
+      btnKsk.click();
+      await sleep(300);
+    }
+
+    const docVal = resolveDoctorValue(selectedDoctorVal, settings);
     const tt = patientData.thong_tin_chung || {};
     const dc = patientData.dia_chi || {};
     const lh = patientData.nguoi_lien_he || {};
@@ -667,11 +890,16 @@ Bạn là chuyên gia OCR y tế hàng đầu. Hãy đọc toàn bộ thông tin
     const tmh = patientData.tai_mui_hong || {};
     const rhm = patientData.rang_ham_mat || {};
     const kl = patientData.ket_luan || {};
+    const ha = String(sh.huyet_ap || "100/65");
+    const [haCao, haThap] = ha.includes("/") ? ha.split("/") : ["100", "65"];
 
-    // TAB 1: THÔNG TIN & TIỀN SỬ
-    const tab1 = document.getElementById("tt32_mau1ksk_tab1");
-    if (tab1) tab1.click();
-    await sleep(200);
+    // 0. Đồng bộ sinh hiệu ra màn hình khám chính (nếu có)
+    const cleanMach = String(sh.mach || "75").replace(/,/g, ".").split(".")[0].trim();
+    // KHÔNG điền vào màn hình khám ngoài (người dùng chỉ khám trong Modal TT25)
+
+    // ================= TAB 1: THÔNG TIN & TIỀN SỬ =================
+    clickModalKskTab(1);
+    await sleep(50);
 
     safeSelectOption("tt32_mau1kskgioitinh", tt.gioi_tinh || "Nữ");
     safeSetInput("tt32_mau1ksksocmnd", tt.cccd);
@@ -712,46 +940,31 @@ Bạn là chuyên gia OCR y tế hàng đầu. Hãy đọc toàn bộ thông tin
       safeClickRadio("tt32_mau1_rdgroup_benhbamsinh", valBamsinh);
       safeClickRadio("tt32_mau1_RadioGroup_benhtatbanthan", valBamsinh);
     }
+    await sleep(50);
 
-    // TAB 2: THỂ LỰC
-    const tab2 = document.getElementById("tt32_mau1ksk_tab2");
-    if (tab2) tab2.click();
-    await sleep(200);
-
-    safeSetInput("tt32_mau1chieucao", sh.chieu_cao || "155,0");
-    safeSetInput("tt32_mau1cannang", sh.can_nang || "48,0");
-    safeSetInput("tt32_mau1bmi", sh.bmi || "20,0");
-    const ha = String(sh.huyet_ap || "100/65");
-    const [haCao, haThap] = ha.includes("/") ? ha.split("/") : ["100", "65"];
-    safeSetInput("tt32_mau1kskhuyetapcao", haCao.trim());
-    safeSetInput("tt32_mau1kskhuyetapthap", haThap.trim());
-    safeSetInput("tt32_mau1kskmach", sh.mach || "75");
-    safeSelectOption("tt32_mau1phanloaitheluc", sh.phan_loai || "Loại I");
-
-    // TAB 3: LÂM SÀNG
-    const tab3 = document.getElementById("tt32_mau1ksk_tab3");
-    if (tab3) tab3.click();
-    await sleep(200);
+    // ================= TAB 3: KHÁM LÂM SÀNG (PHÂN LOẠI CHUYÊN KHOA CHUẨN XÁC THEO JSON) =================
+    clickModalKskTab(3);
+    await sleep(50);
 
     safeSetInput("tt32_mau1tuanhoan", ls.tuan_hoan || "Bình thường");
-    safeSelectOption("tt32_mau1tuanhoanphanloai", ls.tuan_hoan_phan_loai || "Loại I");
+    safeSelectOption("tt32_mau1tuanhoanphanloai", normalizeClassification(ls.tuan_hoan_phan_loai));
 
     safeSetInput("tt32_mau1hohap", ls.ho_hap || "Bình thường");
-    safeSelectOption("tt32_mau1hohapphanloai", ls.ho_hap_phan_loai || "Loại I");
+    safeSelectOption("tt32_mau1hohapphanloai", normalizeClassification(ls.ho_hap_phan_loai));
 
     safeSetInput("tt32_mau1tieuhoa", ls.tieu_hoa || "Bình thường");
-    safeSelectOption("tt32_mau1tieuhoaphanloai", ls.tieu_hoa_phan_loai || "Loại I");
+    safeSelectOption("tt32_mau1tieuhoaphanloai", normalizeClassification(ls.tieu_hoa_phan_loai));
 
     safeSetInput("tt32_mau1tietnieu", ls.than_tiet_nieu || "Bình thường");
-    safeSelectOption("tt32_mau1tietnieuphanloai", ls.than_tiet_nieu_phan_loai || "Loại I");
+    safeSelectOption("tt32_mau1tietnieuphanloai", normalizeClassification(ls.than_tiet_nieu_phan_loai));
 
     safeSetInput("tt32_mau1thankinh", ls.than_kinh || "Bình thường");
-    safeSelectOption("tt32_mau1thankinhphanloai", ls.than_kinh_phan_loai || "Loại I");
+    safeSelectOption("tt32_mau1thankinhphanloai", normalizeClassification(ls.than_kinh_phan_loai));
 
     safeSetInput("tt32_mau1tamthan", ls.tam_than || "Bình thường");
-    safeSelectOption("tt32_mau1tamthanphanloai", ls.tam_than_phan_loai || "Loại I");
+    safeSelectOption("tt32_mau1tamthanphanloai", normalizeClassification(ls.tam_than_phan_loai));
 
-    // G) KHÁM LÂM SÀNG KHÁC -> XÓA TRẮNG HOÀN TOÀN
+    // Xóa trắng lâm sàng khác
     safeClearInput("tt32_mau1lamsangkhac");
     safeClearInput("tt32_mau1khac");
     const elKhacPl = document.getElementById("tt32_mau1lamsangkhacphanloai") || document.querySelector("select[id*='lamsangkhacphanloai']");
@@ -761,35 +974,47 @@ Bạn là chuyên gia OCR y tế hàng đầu. Hãy đọc toàn bộ thông tin
       elKhacPl.dispatchEvent(new Event("change", { bubbles: true }));
     }
 
-    // Mắt
+    // Mắt: Ưu tiên phân loại trong JSON, fallback suy đoán
     safeSetInput("tt32_mau1khongkinhmatphai", mat.khong_kinh_mp || "");
     safeSetInput("tt32_mau1khongkinhmattrai", mat.khong_kinh_mt || "");
     safeSetInput("tt32_mau1cokinhmatphai", mat.co_kinh_mp || "");
     safeSetInput("tt32_mau1cokinhmattrai", mat.co_kinh_mt || "");
-    safeSetInput("tt32_mau1benhvemat", mat.benh_ve_mat || "");
-    const matPhanLoai = mat.phan_loai || (mat.benh_ve_mat || mat.co_kinh_mp ? "Loại II" : "Loại I");
-    safeSelectOption("tt32_mau1matphanloai", matPhanLoai);
+    const matBenh = mat.benh_ve_mat || "";
+    safeSetInput("tt32_mau1benhvemat", matBenh);
+    const matPhanLoai = mat.phan_loai || ((matBenh && matBenh !== "Bình thường") || mat.co_kinh_mp ? "Loại II" : "Loại I");
+    safeSelectOption("tt32_mau1matphanloai", normalizeClassification(matPhanLoai));
 
     // Tai Mũi Họng
     safeSetInput("tt32_mau1taitrainoithuong", tmh.tai_trai_noi_thuong || "");
     safeSetInput("tt32_mau1taitrainoitham", tmh.tai_trai_noi_tham || "");
     safeSetInput("tt32_mau1taiphainoithuong", tmh.tai_phai_noi_thuong || "");
     safeSetInput("tt32_mau1taiphainoitham", tmh.tai_phai_noi_tham || "");
-    safeSetInput("tt32_mau1benhvetai", tmh.benh_tai_mui_hong || "Bình thường");
-    safeSelectOption("tt32_mau1taimuihongphanloai", tmh.phan_loai || "Loại I");
+    const tmhBenh = tmh.benh_tai_mui_hong || "Bình thường";
+    safeSetInput("tt32_mau1benhvetai", tmhBenh);
+    const tmhPhanLoai = tmh.phan_loai || ((tmhBenh && tmhBenh !== "Bình thường") ? "Loại II" : "Loại I");
+    safeSelectOption("tt32_mau1taimuihongphanloai", normalizeClassification(tmhPhanLoai));
 
-    // Răng Hàm Mặt
+    // Răng Hàm Mặt: Ưu tiên phân loại trong JSON
     safeSetInput("tt32_mau1ranghamtren", rhm.ham_tren || "Bình thường");
     safeSetInput("tt32_mau1ranghamduoi", rhm.ham_duoi || "Bình thường");
-    safeSetInput("tt32_mau1benhverang", rhm.benh_ve_rang || "Bình thường");
-    safeSelectOption("tt32_mau1ranghammatphanloai", rhm.phan_loai || "Loại I");
+    const rhmBenh = rhm.benh_ve_rang || "Bình thường";
+    safeSetInput("tt32_mau1benhverang", rhmBenh);
+    const rhmPhanLoai = rhm.phan_loai || ((rhmBenh.toLowerCase().includes("sâu") || (rhmBenh && rhmBenh !== "Bình thường")) ? "Loại II" : "Loại I");
+    safeSelectOption("tt32_mau1ranghammatphanloai", normalizeClassification(rhmPhanLoai));
 
-    // TAB 4: CẬN LÂM SÀNG & KẾT LUẬN
-    const tab4 = document.getElementById("tt32_mau1ksk_tab4");
-    if (tab4) tab4.click();
-    await sleep(200);
+    if (docVal) {
+      const docCount = autofillDoctorToAllSpecialties(docVal);
+      logAction(2, `Đã gán Bác sĩ (${docVal}) vào ${docCount} chuyên khoa.`, "info");
+    }
 
-    // III: KHÁM CẬN LÂM SÀNG -> XÓA TRẮNG HOÀN TOÀN (CHÍNH XÁC ID tt32_mau1ketquacls2)
+    safeClearInput("tt32_mau1lamsangkhac");
+    await sleep(50);
+
+    // ================= TAB 4: CẬN LÂM SÀNG & KẾT LUẬN =================
+    clickModalKskTab(4);
+    await sleep(50);
+
+    // Xóa trắng cận lâm sàng
     safeClearInput("tt32_mau1ketquacls2");
     safeClearInput("tt32_mau1ketquacls");
     safeClearInput("tt32_mau1cls");
@@ -801,27 +1026,47 @@ Bạn là chuyên gia OCR y tế hàng đầu. Hãy đọc toàn bộ thông tin
       elClsDoc.dispatchEvent(new Event("change", { bubbles: true }));
     }
 
-    // IV: KẾT LUẬN
-    safeSetInput("tt32_mau1suckhoabinhthuong", kl.tinh_trang_suc_khoe || "Cận thị");
-    safeSelectOption("tt32_mau1phanloaiketluan", kl.phan_loai_suc_khoe || "Loại II");
+    // Kết luận & Phân loại linh hoạt
+    const diseases = [];
+    if (rhmBenh && rhmBenh !== "Bình thường") diseases.push(rhmBenh);
+    if (matBenh && matBenh !== "Bình thường") diseases.push(matBenh);
+    if (tmhBenh && tmhBenh !== "Bình thường") diseases.push(tmhBenh);
+    const defaultKetLuan = diseases.length > 0 ? diseases.join(", ") : "Bình thường";
+    const defaultPl = (diseases.length > 0 || matPhanLoai === "Loại II" || rhmPhanLoai === "Loại II" || tmhPhanLoai === "Loại II") ? "Loại II" : "Loại I";
 
-    if (docVal) {
-      const docCount = autofillDoctorToAllSpecialties(docVal);
-      logAction(2, `Đã gán Bác sĩ (${docVal}) vào ${docCount} chuyên khoa (Bỏ qua lâm sàng khác & cận lâm sàng).`, "info");
-    }
+    safeSetInput("tt32_mau1suckhoabinhthuong", kl.tinh_trang_suc_khoe || defaultKetLuan);
+    safeSelectOption("tt32_mau1phanloaiketluan", normalizeClassification(kl.phan_loai_suc_khoe || defaultPl));
 
-    await sleep(400);
     if (docVal) {
       autofillDoctorToAllSpecialties(docVal);
     }
 
-    // Xóa trắng lại một lần nữa sau khi gán bác sĩ để đảm bảo 100% không bị ghi đè
     safeClearInput("tt32_mau1ketquacls2");
-    safeClearInput("tt32_mau1lamsangkhac");
+    await sleep(50);
 
-    logAction(2, "✅ Đã điền xong 4 Tab KSK TT25 & Gán Bác sĩ!", "success");
-    updateStatus("success", "✅ Đã điền xong 4 Tab KSK TT25! Hãy kiểm tra và tự bấm nút [LƯU].");
+    // ================= TAB 2: KHÁM THỂ LỰC (DỪNG TẠI TAB 2 ĐỂ KIỂM TRA) =================
+    clickModalKskTab(2);
+    await sleep(80);
+
+    safeSetInput("tt32_mau1chieucao", sh.chieu_cao || "155,0");
+    safeSetInput("tt32_mau1cannang", sh.can_nang || "48,0");
+
+    // Bấm ENTER ở ô Cân nặng để VNPT HIS tự tính BMI
+    const elModalCannang = document.getElementById("tt32_mau1cannang");
+    if (elModalCannang) {
+      triggerEnter(elModalCannang);
+    }
+
+    // HA Tâm thu, Tâm trương, Mạch, Phân loại thể lực (KHÔNG ĐIỀN BMI)
+    safeSetInput("tt32_mau1kskhuyetapcao", haCao.trim());
+    safeSetInput("tt32_mau1kskhuyetapthap", haThap.trim());
+    safeSetInput("tt32_mau1kskmach", cleanMach || "75");
+    safeSelectOption("tt32_mau1phanloaitheluc", normalizeClassification(sh.phan_loai || "Loại I"));
+
+    logAction(2, "🎉 Đã tự động điền xong cả 4 Tab KSK TT25 (Bác sĩ kiểm tra & bấm Lưu).", "success");
+    updateStatus("success", "✅ Đã điền xong cả 4 Tab KSK TT25! Bạn hãy kiểm tra lại và bấm nút [LƯU]!");
   }
+
 
   // -------------------------------------------------------------
   // 6. BUILD IN-PAGE FLOATING WIDGET UI (GOOGLE AI STUDIO EXACT REPLICA)
@@ -942,13 +1187,13 @@ Bạn là chuyên gia OCR y tế hàng đầu. Hãy đọc toàn bộ thông tin
 
           <!-- Action Buttons (Grid 2 cols) -->
           <div class="vnpt-btn-grid">
-            <button id="vnpt-btn-step1" class="vnpt-btn vnpt-btn-primary">
+            <button id="vnpt-btn-step1" class="vnpt-btn vnpt-btn-primary" title="Tự động điền Tiếp nhận (Bác sĩ tự kiểm tra và bấm Lưu)">
               <span>1️⃣ Tiếp nhận</span>
               <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg>
             </button>
-            <button id="vnpt-btn-step2" class="vnpt-btn vnpt-btn-success">
+            <button id="vnpt-btn-step2" class="vnpt-btn vnpt-btn-success" title="Tự động điền siêu tốc 4 Tab KSK TT25 (Bác sĩ tự bấm Lưu)">
               <span>2️⃣ Khám TT25</span>
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg>
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon></svg>
             </button>
           </div>
 
@@ -1220,7 +1465,12 @@ Bạn là chuyên gia OCR y tế hàng đầu. Hãy đọc toàn bộ thông tin
 
     doctorSelect.addEventListener("change", () => {
       userChosenDoctorValue = doctorSelect.value;
-      logAction(null, "Người dùng chọn Bác sĩ: " + (doctorSelect.options[doctorSelect.selectedIndex]?.text || ""), "info");
+      const selectedName = (doctorSelect.options[doctorSelect.selectedIndex]?.text || "").replace(/⭐.*$/, "").trim();
+      if (selectedName) {
+        currentSettings.bac_si_mac_dinh = selectedName;
+        saveSettings({ bac_si_mac_dinh: selectedName });
+      }
+      logAction(null, "Người dùng chọn Bác sĩ: " + selectedName, "info");
     });
 
     function updateStatus(type, msg) {
@@ -1327,19 +1577,20 @@ Bạn là chuyên gia OCR y tế hàng đầu. Hãy đọc toàn bộ thông tin
     function refreshDoctorsDropdown() {
       const doctors = extractDoctorsFromPage();
       if (doctors.length > 0) {
-        const savedVal = userChosenDoctorValue || doctorSelect.value;
         doctorSelect.innerHTML = "";
         
         let matchedIdx = -1;
         let defaultPrefIdx = 0;
+        const targetDoctor = (currentSettings.bac_si_mac_dinh || "").toLowerCase().replace(/^(bs\.|ys\.|bác sĩ|y sĩ)\s*/i, "").trim();
 
         doctors.forEach((doc, idx) => {
           const opt = document.createElement("option");
           opt.value = doc.value;
-          const isPref = currentSettings.bac_si_mac_dinh && doc.name.includes(currentSettings.bac_si_mac_dinh);
+          const cleanDocName = doc.name.toLowerCase().replace(/^(bs\.|ys\.|bác sĩ|y sĩ)\s*/i, "").trim();
+          const isPref = targetDoctor && (cleanDocName.includes(targetDoctor) || targetDoctor.includes(cleanDocName) || doc.name.toLowerCase().includes(targetDoctor));
           if (isPref) defaultPrefIdx = idx;
-          if (savedVal && String(doc.value) === String(savedVal)) matchedIdx = idx;
-          opt.textContent = `${doc.name} ${isPref ? "⭐ (Ưu tiên)" : ""} — Khám sức khỏe tổng quát`;
+          if (userChosenDoctorValue && String(doc.value) === String(userChosenDoctorValue)) matchedIdx = idx;
+          opt.textContent = `${doc.name} ${isPref ? "⭐ (Mặc định)" : ""} — Khám sức khỏe tổng quát`;
           doctorSelect.appendChild(opt);
         });
 
@@ -1347,9 +1598,11 @@ Bạn là chuyên gia OCR y tế hàng đầu. Hãy đọc toàn bộ thông tin
           doctorSelect.selectedIndex = matchedIdx;
         } else {
           doctorSelect.selectedIndex = defaultPrefIdx;
+          userChosenDoctorValue = doctorSelect.value;
         }
       } else {
-        doctorSelect.innerHTML = `<option value="1042">BS. Nông Thị Luyến ⭐ (Ưu tiên) — Khám sức khỏe tổng quát</option>`;
+        const docName = currentSettings.bac_si_mac_dinh || "BS. Nông Thị Luyến";
+        doctorSelect.innerHTML = `<option value="1042">${docName} ⭐ (Mặc định) — Khám sức khỏe tổng quát</option>`;
       }
     }
 
@@ -1478,9 +1731,12 @@ Bạn là chuyên gia OCR y tế hàng đầu. Hãy đọc toàn bộ thông tin
         bac_si_mac_dinh: setBs.value
       };
 
+      userChosenDoctorValue = null; // Đặt lại để áp dụng ngay Bác sĩ mới được chọn
+
       saveSettings(updated, () => {
-        logAction(null, "Đã lưu cài đặt mới vào bộ nhớ.", "info");
-        alert("✅ Đã lưu Cài đặt thành công!");
+        refreshDoctorsDropdown();
+        logAction(null, `Đã lưu cài đặt mới (Bác sĩ mặc định: ${setBs.value}).`, "info");
+        alert(`✅ Đã lưu Cài đặt thành công!\nBác sĩ mặc định: ${setBs.value}`);
         tabNavFill.click();
       });
     });
